@@ -1,0 +1,175 @@
+<div id="map"></div>
+
+<div id="timelineContainer">
+
+  <div id="sliderRow">
+
+    <!-- Transport Controls -->
+    <div id="transportControls">
+      <button id="backToStartBtn">⏮</button>
+      <button id="playPauseBtn">▶</button>
+      <button id="speedToggleBtn">1×</button>
+    </div>
+
+    <!-- Slider + Tick Wrapper -->
+    <div id="sliderWrapper">
+      <div id="yearTicks"></div>
+
+      <input
+        id="yearSlider"
+        type="range"
+        min="0"
+        max="1"
+        value="0"
+        step="0.0005"
+      />
+    </div>
+
+    <!-- Year Navigation Arrows -->
+    <div id="yearNavButtons">
+      <button id="prevYearBtn">◀</button>
+      <button id="nextYearBtn">▶</button>
+    </div>
+
+  </div>
+  <div id="yearLabel">Year: 0</div>
+
+</div>
+
+
+
+
+
+<!-- Permanent Left Panel -->
+<div id="leftPanel" role="region" aria-label="Details panel">
+  <div id="leftTabs">
+    <button class="tab-btn active" data-tab="info">Information</button>
+    <button class="tab-btn" data-tab="year">Year</button>
+    <button class="tab-btn" data-tab="building">Building</button>
+  </div>
+
+  <div id="leftContent">
+    <!-- Information Tab -->
+    <section id="tab-info" class="tab-section">
+      <h2 class="lp-title">Holy Heights</h2>
+      <h4 class="lp-title">100 of the tallest religious buildings in history</h4>
+      <p class="lp-text">
+        Explore the height of religious buildings throughout history from the Great Pyramid of Giza to the Sagrada Família.
+      </p>
+      <p class="lp-text">
+        <span><strong>Navigation:</strong></span> <br>
+        • Move the slider through the centuries to watch the groundbreaking, completion and destruction of the structures.<br>
+         • ⏮ reset slider <br>
+        • ▶/⏸ play/pause slider <br>
+        • 1x-8x playback speed<br>
+        • ◀ one year earlier <br>
+        • ▶ one year later <br>
+        • Use the filters to focus on specific continents or regions.<br> • Click any marker on the map to view detailed information.<br> • Refer to the legend for icon meanings and build/end/destruction timeline colours.<br>
+      </p>
+      <p class="lp-text">
+        <span><strong>Inclusion criteria:</strong></span> 
+        Buildings must either be a place of worship, statue representing a religious figure, a burial of religious significance, or housing for a religious figure. The single highest point is taken for each building.
+      </p>
+      <p class="lp-text">
+        <span><strong>Technical stuff:</strong></span> A linear relationship is assumed from construction start to construction end for the height at year. This dataset has been constructed primarily from wikipedia pages, and where crucial information was missing or ambiguous other sources were used.
+      </p>
+    </section>
+
+    <!-- Year Tab -->
+    <section id="tab-year" class="tab-section" hidden>
+      <h3 class="lp-subtitle">
+        Standing in <span id="yearTabYear"></span>
+      </h3>
+      <p> Click any building from the list to zoom to its location and view full details. </p>
+      <div id="yearList" class="list-scroll"></div>
+    </section>
+
+    <!-- Building Tab -->
+    <section id="tab-building" class="tab-section" hidden>
+      <h3 class="lp-subtitle" id="bldgTitle"></h3>
+
+      <!-- Wikipedia link (source1) -->
+      <div id="bldgWiki"></div>
+
+      <div class="kv">
+        <div class="kv-row"><span class="kv-key">Religion (origin):</span><span id="bldgRelOrigin"></span></div>
+        <div class="kv-row"><span class="kv-key">Religion (current):</span><span id="bldgRelCurrent"></span></div>
+        <div class="kv-row"><span class="kv-key">Type:</span><span id="bldgType"></span></div>
+        <div class="kv-row"><span class="kv-key">Country:</span><span id="bldgCountry"></span></div>
+        <div class="kv-row"><span class="kv-key">Continent:</span><span id="bldgContinent"></span></div>
+        <div class="kv-row"><span class="kv-key">Construction start:</span><span id="bldgStart"></span></div>
+        <div class="kv-row"><span class="kv-key">Construction end:</span><span id="bldgEnd"></span></div>
+        <div class="kv-row"><span class="kv-key">Destruction year:</span><span id="bldgDestroyed"></span></div>
+        <div class="kv-row"><span class="kv-key">Height (m):</span><span id="bldgHeightM"></span></div>
+        <div class="kv-row"><span class="kv-key">Max height (m):</span><span id="bldgMaxHeight"></span></div>
+        <div class="kv-row"><span class="kv-key">Height at year (m):</span><span id="bldgHeightAtYear"></span></div>
+        <div class="kv-row"><span class="kv-key">Year:</span><span id="bldgYear"></span></div>
+      </div>
+
+      <!-- Other sources -->
+      <div id="bldgOtherSources"></div>
+    </section>
+  </div>
+</div>
+
+<!-- Filters Panel -->
+<button id="filterToggle" aria-expanded="false" aria-controls="filterPanel">
+  ☰ Filters
+</button>
+
+<div id="filterPanel" role="region" aria-label="Filters" aria-hidden="true">
+  <div id="filterHeader">
+    <span>Filters</span>
+    <button id="closeFilters" aria-label="Close filters">✕</button>
+  </div>
+
+  <div id="filterScrollArea">
+    <div class="filter-group">
+      <div class="filter-title">Religion</div>
+      <label class="select-all">
+        <input type="checkbox" id="religionSelectAll" checked />
+        Select all
+      </label>
+      <div id="filterReligionGroup" class="checkbox-list"></div>
+    </div>
+
+    <div class="filter-group">
+      <div class="filter-title">Continent</div>
+      <label class="select-all">
+        <input type="checkbox" id="continentSelectAll" checked />
+        Select all
+      </label>
+      <div id="filterContinentGroup" class="checkbox-list"></div>
+    </div>
+  </div>
+</div>
+
+<div id="mapLegend">
+  <div class="legend-title">Legend</div>
+
+  <div class="legend-item"><img src="https://joelakeyy.github.io/icons/cathedral-svgrepo-com.svg"> Cathedral</div>
+  <div class="legend-item"><img src="https://joelakeyy.github.io/icons/mosque-svgrepo-com.svg"> Mosque</div>
+  <div class="legend-item"><img src="https://joelakeyy.github.io/icons/pyramid-svgrepo-com.svg"> Pyramid</div>
+  <div class="legend-item"><img src="https://joelakeyy.github.io/icons/stupa-svgrepo-com.svg"> Stupa</div>
+  <div class="legend-item"><img src="https://joelakeyy.github.io/icons/synagogue-svgrepo-com.svg"> Synagogue</div>
+  <div class="legend-item"><img src="https://joelakeyy.github.io/icons/hindu-temple-svgrepo-com.svg"> Gopura</div>
+  <div class="legend-item"><img src="https://joelakeyy.github.io/icons/hindu-temple-stupa-svgrepo-com.svg"> Temple</div>
+  <div class="legend-item"><img src="https://joelakeyy.github.io/icons/great-buddha-of-nara-1-svgrepo-com.svg"> Statue</div>
+  <div class="legend-item"><img src="https://joelakeyy.github.io/icons/pagoda-svgrepo-com.svg"> Pagoda</div>
+<div class="legend-divider"></div>
+  <!-- ⭐ NEW ANIMATION LEGEND ITEMS -->
+  <div class="legend-item">
+    <span class="legend-color legend-blue"></span> Build start
+  </div>
+  <div class="legend-item">
+    <span class="legend-color legend-gold"></span> Build end
+  </div>
+  <div class="legend-item">
+    <span class="legend-color legend-red"></span> Destroyed
+  </div>
+</div>
+
+
+
+
+
